@@ -337,15 +337,15 @@ public class Master : MonoBehaviour
     }
 
     void endTurn(){
-        int[] x = {0, 0, 0, 0, 0, 750};
+        int[] x = {0, 0, 0, 0, 0, -100};
         turn++;
         turnText.text = "Turn: " + turn;
 
         foreach(Planet p in pLog){
             for(int i=0; i<6; i++){
-                x[i] -= p.prod[i];
+                x[i] -= p.production[i];
             }
-            //Debug.Log("Upkeep/Production was: " + p.prod[0] + " " + p.prod[1] + " " + p.prod[2] + " " + p.prod[3] + " " + p.prod[4] + " " + p.prod[5]);
+            //Debug.Log("Upkeep/Production was: " + p.production[0] + " " + p.production[1] + " " + p.production[2] + " " + p.production[3] + " " + p.production[4] + " " + p.production[5]);
         }
 
         inv.Spend(x);

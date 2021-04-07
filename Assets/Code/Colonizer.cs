@@ -22,11 +22,11 @@ public class Colonizer : MonoBehaviour
         ddOptions = new List<string> {};
     }
 
-    void defineBuildings(){
+    void defineBuildings(){             //This entire section is subject to rebuild.
         buildings[0] = new Building();
         buildings[0].name = "Toll Station";
         buildings[0].cost = new int[] {0, 0, 0, 0, 0, 100};
-        buildings[0].production = new int[] {0, 0, 0, 0, 0, 35};
+        buildings[0].production = new int[] {0, 0, 0, 0, 0, 250};
         buildings[0].size = 1;
 
         buildings[1] = new Building();
@@ -42,19 +42,19 @@ public class Colonizer : MonoBehaviour
         buildings[2].size = 2;
 
         buildings[3] = new Building();
-        buildings[3].name = "Green Mine";
+        buildings[3].name = "Green Pump";
         buildings[3].cost = new int[] {1, 1, 0, 0, 0, 500};
         buildings[3].production = new int[] {0, 0, 2, 0, 0, 0};
         buildings[3].size = 4;
 
         buildings[4] = new Building();
-        buildings[4].name = "Yellow Mine";
+        buildings[4].name = "Yellow Pump";
         buildings[4].cost = new int[] {1, 1, 0, 0, 0, 500};
         buildings[4].production = new int[] {0, 0, 0, 2, 0, 0};
         buildings[4].size = 4;
 
         buildings[5] = new Building();
-        buildings[5].name = "White Mine";
+        buildings[5].name = "White Farm";
         buildings[5].cost = new int[] {2, 2, 1, 1, 0, 750};
         buildings[5].production = new int[] {0, 0, 0, 0, 2, 0};
         buildings[5].size = 6;
@@ -131,6 +131,14 @@ public class Colonizer : MonoBehaviour
             infoText.text = selected.getInfo();
             //setDD(selected, pdd);
         }
+    }
+
+    public void setDD(Planet selected, Dropdown pdd){
+        //Really wish I hadn't gotten rid of the original of this.
+        //Basically, certain buildings are locked to certain planet types.
+        //Call only colonization and going to the solar screen.
+
+        //Also means I have to clean the Dropdowns current default options.
     }
 
     public void ddDisplay(Dropdown pdd, GameObject buildObj){

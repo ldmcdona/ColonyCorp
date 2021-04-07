@@ -1351,7 +1351,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Sell
 
-    +$90'
+    +$400'
 --- !u!222 &521056900
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2355,7 +2355,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Buy
 
-    -$50'
+    -$100'
 --- !u!222 &721857775
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2653,7 +2653,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Buy
 
-    -$50'
+    -$100'
 --- !u!222 &852006601
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2814,7 +2814,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Buy
 
-    -$100'
+    -$500'
 --- !u!222 &885450647
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3521,7 +3521,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Sell
 
-    +$60'
+    +$200'
 --- !u!222 &1243200404
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3760,7 +3760,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Sell
 
-    +$60'
+    +$200'
 --- !u!222 &1312046476
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3959,7 +3959,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Buy
 
-    -$75'
+    -$250'
 --- !u!222 &1407511022
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4238,7 +4238,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Sell
 
-    +$30'
+    +$75'
 --- !u!222 &1475239097
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4419,7 +4419,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Sell
 
-    +$30'
+    +$75'
 --- !u!222 &1490205835
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5035,7 +5035,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Buy
 
-    -$75'
+    -$250'
 --- !u!222 &1751029510
 CanvasRenderer:
   m_ObjectHideFlags: 0
