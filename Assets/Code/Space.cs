@@ -25,6 +25,10 @@ public class Planet{
         level = levelCap = 0;
     }
 
+    public int[] getMod(){
+        return modifiers;
+    }
+
     public void rollModifiers(int[] mod){
         for(int i=0; i<5; i++){
             int roll = Random.Range(1, 101);
@@ -56,14 +60,7 @@ public class Planet{
     }
 
     public string getInfo(){
-        string temp;
-        string[] letters;
-        letters = new string[] {"R", "B", "G", "Y", "W", "$"};
-        temp = type + "\n" + heat + "\nSize: " + size + "\nModifiers:";
-        for(int i=0; i<6; i++){
-            temp += (" " + letters[i] + modifiers[i]);        //Probably gonna want to replace this with something cleaner eventually.
-        }
-        return temp;
+        return (type + "\n" + heat + "\nSize: " + size);
     }
 
     public string getCostDisplay(){

@@ -273,7 +273,7 @@ public class Master : MonoBehaviour
             }
             planets[i] = Instantiate<GameObject>(planetPrefab);
             GameObject pcan, temp2, buildObj;
-            Text coordText, infoText, costText, pbtx;
+            Text coordText, infoText, costText, pbtx, modText;
             Button pbu1, pbu2;
             SpriteRenderer pim;
             Dropdown pdd;
@@ -315,6 +315,17 @@ public class Master : MonoBehaviour
                 buildObj.SetActive(false);
                 temp2 = pcan.transform.GetChild(4).gameObject;
                 temp2.SetActive(false);
+            }
+
+            temp2 = pcan.transform.GetChild(5).gameObject;
+            int[] modTemp = selected.planets[i].getMod();
+            for(int ii=0; ii<5; ii++){
+                modText = temp2.transform.GetChild(ii).gameObject.GetComponent<Text>();
+                if(modTemp[ii] > -1){
+                    modText.text = "+" + modTemp[ii];
+                } else {
+                    modText.text = "" + modTemp[ii];
+                }
             }
 
             planets[i].transform.position = spot;

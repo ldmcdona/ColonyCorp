@@ -17,7 +17,7 @@ public class Colonizer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        buildings = new Building[7];    //Number is subject to change.
+        buildings = new Building[8];    //Number is subject to change.
         defineBuildings();
         ddOptions = new List<string> {};
     }
@@ -26,45 +26,52 @@ public class Colonizer : MonoBehaviour
         buildings[0] = new Building();
         buildings[0].name = "Toll Station";
         buildings[0].cost = new int[] {0, 0, 0, 0, 0, 100};
-        buildings[0].production = new int[] {0, 0, 0, 0, 0, 250};
+        buildings[0].production = new int[] {-2, -2, -2, -2, -2, 250};
         buildings[0].size = 1;
 
+        //These are probably unbalanced.
         buildings[1] = new Building();
-        buildings[1].name = "Red Mine";
+        buildings[1].name = "Industrial Mine";
         buildings[1].cost = new int[] {0, 0, 0, 0, 0, 300};
-        buildings[1].production = new int[] {2, 0, 0, 0, 0, 0};
+        buildings[1].production = new int[] {0, 0, 0, 0, 0, 0};
         buildings[1].size = 2;
 
         buildings[2] = new Building();
-        buildings[2].name = "Blue Mine";
+        buildings[2].name = "Red Mine";
         buildings[2].cost = new int[] {0, 0, 0, 0, 0, 300};
-        buildings[2].production = new int[] {0, 2, 0, 0, 0, 0};
+        buildings[2].production = new int[] {2, -2, -2, -2, -2, 0};
         buildings[2].size = 2;
 
         buildings[3] = new Building();
-        buildings[3].name = "Green Pump";
-        buildings[3].cost = new int[] {1, 1, 0, 0, 0, 500};
-        buildings[3].production = new int[] {0, 0, 2, 0, 0, 0};
-        buildings[3].size = 4;
+        buildings[3].name = "Blue Mine";
+        buildings[3].cost = new int[] {0, 0, 0, 0, 0, 300};
+        buildings[3].production = new int[] {-2, 2, -2, -2, -2, 0};
+        buildings[3].size = 2;
 
         buildings[4] = new Building();
-        buildings[4].name = "Yellow Pump";
+        buildings[4].name = "Green Pump";
         buildings[4].cost = new int[] {1, 1, 0, 0, 0, 500};
-        buildings[4].production = new int[] {0, 0, 0, 2, 0, 0};
+        buildings[4].production = new int[] {-2, -2, 2, -2, -2, 0};
         buildings[4].size = 4;
 
         buildings[5] = new Building();
-        buildings[5].name = "White Farm";
-        buildings[5].cost = new int[] {2, 2, 1, 1, 0, 750};
-        buildings[5].production = new int[] {0, 0, 0, 0, 2, 0};
-        buildings[5].size = 6;
+        buildings[5].name = "Yellow Pump";
+        buildings[5].cost = new int[] {1, 1, 0, 0, 0, 500};
+        buildings[5].production = new int[] {-2, -2, -2, 2, -2, 0};
+        buildings[5].size = 4;
 
-        //These are *Wildly* unbalanced. 2+2+4+4+6 = 18, but these only take 8. 
         buildings[6] = new Building();
-        buildings[6].name = "Super Mine";
-        buildings[6].cost = new int[] {2, 2, 2, 2, 1, 1000};
-        buildings[6].production = new int[] {2, 2, 2, 2, 2, 0};
-        buildings[6].size = 8;
+        buildings[6].name = "White Farm";
+        buildings[6].cost = new int[] {2, 2, 1, 1, 0, 750};
+        buildings[6].production = new int[] {-2, -2, -2, -2, 2, 0};
+        buildings[6].size = 6;
+
+        //These are probably *Wildly* unbalanced.
+        buildings[7] = new Building();
+        buildings[7].name = "Super Mine";
+        buildings[7].cost = new int[] {2, 2, 2, 2, 1, 1000};
+        buildings[7].production = new int[] {1, 1, 1, 1, 1, 0};
+        buildings[7].size = 8;
     }
 
     public void colonize(Resources inv, Planet selected, Text top, GameObject display, GridBehaviour grid, int a, int b, List<Planet> pLog){
