@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class Resources : MonoBehaviour
 {
-    public int red, blue, green, yellow, white, cash;
+    public int red, blue, green, yellow, white, cash, points;
+    public int purple, lime, black;
     // Start is called before the first frame update
     void Start()
     {
-        red = blue = green = yellow = white = 0;
-        cash = 2000;
+        red = blue = green = yellow = white = purple = lime = black = 0;
+        cash = 3000;
         SendMessageUpwards("display");
+        points = 0;
+    }
+
+    //Purple, Lime, and Black are going to be refined resources, needing buildings to produce. 
+
+    public void pointChange(int p){
+        points += p;
     }
 
     public void Gain(int[] p){
@@ -40,7 +48,7 @@ public class Resources : MonoBehaviour
         if(c[4] > white){
             consolidated += (500 * (c[4] - white));
         }
-        if(cash > consolidated){
+        if(cash >= consolidated){
             return true;
         } else {
             return false;

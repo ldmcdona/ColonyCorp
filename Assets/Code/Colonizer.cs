@@ -9,6 +9,11 @@ public class Building{
     public string name;
 }
 
+public class Special : Building{
+    public int points;
+    public int[] upkeep;
+}
+
 public class Colonizer : MonoBehaviour
 {
     public Building[] buildings;
@@ -29,54 +34,49 @@ public class Colonizer : MonoBehaviour
         buildings[0].production = new int[] {-2, -2, -2, -2, -2, 250};
         buildings[0].size = 1;
 
-        //These are probably unbalanced.
         buildings[1] = new Building();
-        buildings[1].name = "Industrial Mine";
+        buildings[1].name = "Red Mine";
         buildings[1].cost = new int[] {0, 0, 0, 0, 0, 300};
-        buildings[1].production = new int[] {0, 0, 0, 0, 0, 0};
+        buildings[1].production = new int[] {2, -2, -2, -2, -2, 0};
         buildings[1].size = 2;
 
         buildings[2] = new Building();
-        buildings[2].name = "Red Mine";
+        buildings[2].name = "Blue Mine";
         buildings[2].cost = new int[] {0, 0, 0, 0, 0, 300};
-        buildings[2].production = new int[] {2, -2, -2, -2, -2, 0};
+        buildings[2].production = new int[] {-2, 2, -2, -2, -2, 0};
         buildings[2].size = 2;
 
         buildings[3] = new Building();
-        buildings[3].name = "Blue Mine";
-        buildings[3].cost = new int[] {0, 0, 0, 0, 0, 300};
-        buildings[3].production = new int[] {-2, 2, -2, -2, -2, 0};
-        buildings[3].size = 2;
+        buildings[3].name = "Green Pump";
+        buildings[3].cost = new int[] {1, 1, 0, 0, 0, 500};
+        buildings[3].production = new int[] {-2, -2, 2, -2, -2, 0};
+        buildings[3].size = 4;
 
         buildings[4] = new Building();
-        buildings[4].name = "Green Pump";
+        buildings[4].name = "Yellow Pump";
         buildings[4].cost = new int[] {1, 1, 0, 0, 0, 500};
-        buildings[4].production = new int[] {-2, -2, 2, -2, -2, 0};
+        buildings[4].production = new int[] {-2, -2, -2, 2, -2, 0};
         buildings[4].size = 4;
 
         buildings[5] = new Building();
-        buildings[5].name = "Yellow Pump";
-        buildings[5].cost = new int[] {1, 1, 0, 0, 0, 500};
-        buildings[5].production = new int[] {-2, -2, -2, 2, -2, 0};
-        buildings[5].size = 4;
+        buildings[5].name = "White Farm";
+        buildings[5].cost = new int[] {2, 2, 1, 1, 0, 750};
+        buildings[5].production = new int[] {-2, -2, -2, -2, 2, 0};
+        buildings[5].size = 6;
+
+        // --- IDEAS AND TESTING ---
 
         buildings[6] = new Building();
-        buildings[6].name = "White Farm";
-        buildings[6].cost = new int[] {2, 2, 1, 1, 0, 750};
-        buildings[6].production = new int[] {-2, -2, -2, -2, 2, 0};
-        buildings[6].size = 6;
+        buildings[6].name = "Civilian Center";
+        buildings[6].cost = new int[] {1, 1, 1, 1, 1, 250};
+        buildings[6].production = new int[] {0, 0, 0, 0, 0, 0};
+        buildings[6].size = 4;
 
-        //These are probably *Wildly* unbalanced.
-        buildings[7] = new Building();
-        buildings[7].name = "Super Mine";
-        buildings[7].cost = new int[] {2, 2, 2, 2, 1, 1000};
-        buildings[7].production = new int[] {1, 1, 1, 1, 1, 0};
-        buildings[7].size = 8;
     }
 
     public void colonize(Resources inv, Planet selected, Text top, GameObject display, GridBehaviour grid, int a, int b, List<Planet> pLog){
         GameObject cbuObj, canv, buildObj;
-        Text buttonText, infoText, costText;
+        Text buttonText, infoText, costText, modText; //modText isn't used yet because colony level doesn't affect upkeep yet.
         Dropdown pdd;
         SpriteRenderer psr;
 
@@ -94,7 +94,7 @@ public class Colonizer : MonoBehaviour
         pdd = buildObj.transform.GetChild(1).gameObject.GetComponent<Dropdown>();
 
         if(!selected.colony){
-            if(inv.canAfford(selected.getCost())){
+            if(inv.canAfford(selected.getCost())){ //If statement is not acting as intended. Planets wont colonize properly.
                 selected.colony = true;
                 grid.distances(a, b);
                 inv.Spend(selected.getCost());
@@ -128,24 +128,36 @@ public class Colonizer : MonoBehaviour
         }
     }
 
-    public void build(Resources inv, Planet selected, Dropdown pdd, Text top, Text infoText){
+    public void build(Resources inv, Planet selected, Dropdown pdd, Text top, Text infoText, GameObject display){
+        Text modText;
+        GameObject temp;
+        temp = display.transform.GetChild(0).gameObject;
+        temp = temp.transform.GetChild(6).gameObject;
+
         if(inv.canAfford(buildings[pdd.value].cost) && buildings[pdd.value].size <= selected.size){
             selected.buildings.Add(buildings[pdd.value].name);
-            inv.Spend(buildings[pdd.value].cost); //pdd.value is the index of the selection dd option.
+            inv.Spend(buildings[pdd.value].cost); //pdd.value is the index of the selection dd option. Meaning this needs to be changed.
             selected.changeProd(buildings[pdd.value].production);
             top.text = inv.getInfo();
             selected.size -= buildings[pdd.value].size;
             infoText.text = selected.getInfo();
             //setDD(selected, pdd);
+            int[] prod = selected.getProd();
+            for(int i=0; i<5; i++){
+                modText = temp.transform.GetChild(i).gameObject.GetComponent<Text>();
+                modText.text = "" + prod[i];
+            }
         }
     }
 
     public void setDD(Planet selected, Dropdown pdd){
         //Really wish I hadn't gotten rid of the original of this.
         //Basically, certain buildings are locked to certain planet types.
-        //Call only colonization and going to the solar screen.
+        //Call only on colonization and going to the solar screen.
 
         //Also means I have to clean the Dropdowns current default options.
+        List<string> ddOptions = new List<string> {"Toll Station", "Red Mine", "Blue Mine"};
+
     }
 
     public void ddDisplay(Dropdown pdd, GameObject buildObj){
@@ -176,3 +188,22 @@ public class Colonizer : MonoBehaviour
 
     //https://docs.unity3d.com/2018.4/Documentation/ScriptReference/UI.Dropdown.html
 }
+
+/*
+Okay Liam, let's talk.
+
+Planetary modifiers are OP as hell.
++2 per mine doubles mine effectiveness, and when you can build like 20 that's a problem.
+
+Maybe have resources actually be super cheap but raise upkeep rates?
+Or got full Starsector and vastly lower the building amount per planet.
+
+Also, figure out how to display cash production and upkeep. (And mod theoretically).
+
+Then figure out the Purple, Lime, and Black resources.
+
+Also also, the shift/ctrl click for buy/sell 5/10. That would be nice.
+
+Remember you are working on the 'Free Build' mode.
+
+*/

@@ -12,7 +12,7 @@ public class Planet{
     public int level, levelCap, size;
     private int[] colCost, modifiers;
     public int[] production, upkeep;
-    public bool colony, maxed;
+    public bool colony, maxed, barren, super;
     public List<string> buildings;//Unused.
 
     public Planet(){
@@ -27,6 +27,14 @@ public class Planet{
 
     public int[] getMod(){
         return modifiers;
+    }
+
+    public int[] getProd(){
+        return production;
+    }
+
+    public int[] getUpke(){
+        return upkeep;
     }
 
     public void rollModifiers(int[] mod){
@@ -45,7 +53,7 @@ public class Planet{
                 modifiers[i] = 2;
             }
         }
-        modifiers[5] = mod[5];
+        modifiers[5] = mod[5]; //Currently a bit of a joke. Need to change how 'changeProd' handles this.
     }
 
     public void changeProd(int[] a){
@@ -60,7 +68,7 @@ public class Planet{
     }
 
     public string getInfo(){
-        return (type + "\n" + heat + "\nSize: " + size);
+        return (type + "\n" + heat + "\nSize: " + size + "\nModifiers:\nProduction:\nUpkeep:");
     }
 
     public string getCostDisplay(){
@@ -147,11 +155,11 @@ public class Planet{
         if(b == "Cold Warning"){
             col[0] += 1;
             size -= 1;
-            upk[0] = -1;
+            upk[0] = 1;
         } else if(b == "Heat Warning"){
             col[1] += 1;
             size -= 1;
-            upk[1] = -1;
+            upk[1] = 1;
         }
 
         colCost = col;
@@ -327,17 +335,3 @@ public class Space : MonoBehaviour
         return planets[a].pColor;
     }
 }
-
-/*
-    Well here we are, at a loss again. 
-    I've a skeleton of a game with working mechanics and no clue for a direction I want to take it.
-
-    Theoretically add:
-    Planet resource production modifiers.
-    Things other than planets to interact with.
-    Resources that can't be bought.
-    Sell 5 and Sell 10 variants for buttons. (Maybe have them hold ctrl or shift and check for it in the listener?)
-    Some sort of overall goal beyond money? 
-    A reason to do poorer planets first?
-    A higher type of colony that's end-game?
-*/

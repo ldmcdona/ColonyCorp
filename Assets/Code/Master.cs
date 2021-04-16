@@ -253,11 +253,13 @@ public class Master : MonoBehaviour
     }
 
     void SpawnPlanets(){
+        //Planet ptemp;
         Vector3 spot;
         spot.z = -1f;
         planets = new GameObject[selected.planetCount];
         for(int i=0; i<selected.planetCount; i++){
             int j = i;
+            //ptemp = selected.planets[j]; // I think this line is what is causing the reload issues. //Yep. Confirmed.
             if(i == 0){
                 spot.x = -390f;
                 spot.y = 43.3f;
@@ -271,7 +273,7 @@ public class Master : MonoBehaviour
                 spot.x = -345f;
                 spot.y = 17f;
             }
-            planets[i] = Instantiate<GameObject>(planetPrefab);
+            planets[j] = Instantiate<GameObject>(planetPrefab);
             GameObject pcan, temp2, buildObj;
             Text coordText, infoText, costText, pbtx, modText;
             Button pbu1, pbu2;
@@ -290,19 +292,19 @@ public class Master : MonoBehaviour
             pbu2 = buildObj.transform.GetChild(0).gameObject.GetComponent<Button>(); //Build
 
             pbu1.onClick.AddListener(delegate {col.colonize(inv, selected.planets[j], topText, planets[j], grid, selected.x, selected.y, pLog); });
-            pbu2.onClick.AddListener(delegate {col.build(inv, selected.planets[j], pdd, topText, infoText); });
+            pbu2.onClick.AddListener(delegate {col.build(inv, selected.planets[j], pdd, topText, infoText, planets[j]); });
 
             pdd.onValueChanged.AddListener(delegate {col.ddDisplay(pdd, buildObj); });
 
             coordText.text = "Planet (" + selected.x + ", " + selected.y + ") - " + (i+1);
-            infoText.text = selected.getPlanetInfo(i);
-            costText.text = selected.planets[i].getCostDisplay();
-            pim.color = selected.getPlanetColor(i);
+            infoText.text = selected.planets[j].getInfo();
+            costText.text = selected.planets[j].getCostDisplay();
+            pim.color = selected.planets[j].pColor;
 
-            if(!selected.planets[i].colony){
+            if(!selected.planets[j].colony){
                 buildObj.SetActive(false);           
             } else {
-                if(selected.planets[i].level != selected.planets[i].levelCap){
+                if(selected.planets[j].level != selected.planets[j].levelCap){
                     pbtx.text = "Upgrade";
                 } else {
                     temp2 = pcan.transform.GetChild(4).gameObject;
@@ -318,17 +320,31 @@ public class Master : MonoBehaviour
             }
 
             temp2 = pcan.transform.GetChild(5).gameObject;
-            int[] modTemp = selected.planets[i].getMod();
-            for(int ii=0; ii<5; ii++){
-                modText = temp2.transform.GetChild(ii).gameObject.GetComponent<Text>();
-                if(modTemp[ii] > -1){
-                    modText.text = "+" + modTemp[ii];
+            int[] modTemp = selected.planets[j].getMod();
+            for(int k=0; k<5; k++){
+                modText = temp2.transform.GetChild(k).gameObject.GetComponent<Text>();
+                if(modTemp[k] > -1){
+                    modText.text = "+" + modTemp[k];
                 } else {
-                    modText.text = "" + modTemp[ii];
+                    modText.text = "" + modTemp[k];
                 }
             }
 
-            planets[i].transform.position = spot;
+            temp2 = pcan.transform.GetChild(6).gameObject;
+            modTemp = selected.planets[j].getProd();
+            for(int k=0; k<5; k++){
+                modText = temp2.transform.GetChild(k).gameObject.GetComponent<Text>();
+                modText.text = "" + modTemp[k];
+            }
+
+            temp2 = pcan.transform.GetChild(7).gameObject;
+            modTemp = selected.planets[j].getUpke();
+            for(int k=0; k<5; k++){
+                modText = temp2.transform.GetChild(k).gameObject.GetComponent<Text>();
+                modText.text = "" + modTemp[k];
+            }
+
+            planets[j].transform.position = spot;
             //col.setDD(selected.planets[j], pdd);
         }
     }
@@ -348,20 +364,23 @@ public class Master : MonoBehaviour
     }
 
     void endTurn(){
-        int[] x = {0, 0, 0, 0, 0, -100};
+        int[] x = {0, 0, 0, 0, 0, 100};
+        int[] y = {0, 0, 0, 0, 0, 0};
+        int[] z = {0, 0, 0, 0, 0, 0};
         turn++;
         turnText.text = "Turn: " + turn;
 
         foreach(Planet p in pLog){
             for(int i=0; i<6; i++){
-                x[i] -= p.production[i];
+                x[i] += p.production[i];
+                y[i] += p.upkeep[i];
+                z[i] = x[i] - y[i];
             }
-            //Debug.Log("Upkeep/Production was: " + p.production[0] + " " + p.production[1] + " " + p.production[2] + " " + p.production[3] + " " + p.production[4] + " " + p.production[5]);
         }
 
-        inv.Spend(x);
-        //Debug.Log("Upkeep/Production was: " + -x[0] + " " + -x[1] + " " + -x[2] + " " + -x[3] + " " + -x[4] + " " + -x[5]);
-        upkeepText.text = "Cash: " + -x[5] + " Red: " + -x[0] + " Blue: " + -x[1] + " Green: " + -x[2] + " Yellow: " + -x[3] + " White: " + -x[4];
+        inv.Gain(x);
+        inv.Spend(y);
+        upkeepText.text = "Cash: " + z[5] + " Red: " + z[0] + " Blue: " + z[1] + " Green: " + z[2] + " Yellow: " + z[3] + " White: " + z[4];
 
         if(inv.cash < 0){
             //Debug.Log("Sell All Triggered.");
