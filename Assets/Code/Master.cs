@@ -206,16 +206,13 @@ public class Master : MonoBehaviour
 
     void marketView(){
         if(view){
-            //highlight.transform.position = outB;
-            //sideText.text = "Nothing Selected."; // replace w/ disable sidebar
-            UIs[2].SetActive(false); //Like this.
+            UIs[2].SetActive(false);
             UIs[4].SetActive(false);
             UIs[5].SetActive(false);
             MBtx.text = "Main\nScreen";
             view = false;
             //Move cam to market coords.
             cam.transform.position = market;
-            //selected = null;
         } else {
             MBtx.text = "Galactic\nMarket";
             view = true;
@@ -235,8 +232,6 @@ public class Master : MonoBehaviour
 
     void solarView(){
         if(view){
-            //highlight.transform.position = outB;
-            //sideText.text = "Nothing Selected.";
             UIs[2].SetActive(false);
             UIs[3].SetActive(false);
             UIs[5].SetActive(false);
@@ -244,7 +239,6 @@ public class Master : MonoBehaviour
             view = false;
             cam.transform.position = solar;
             SpawnPlanets();
-            //selected = null;
         } else {
             if(selected != null){
                 if(selected.exploration < 3){
@@ -258,7 +252,6 @@ public class Master : MonoBehaviour
             cam.transform.position = normal;
             KillPlanets();
             sideText.text = selected.getInfo();
-            //selected = null;
         }
     }
 

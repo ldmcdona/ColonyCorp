@@ -117,7 +117,7 @@ public class Colonizer : MonoBehaviour
         pdd = buildObj.transform.GetChild(1).gameObject.GetComponent<Dropdown>();
 
         if(!selected.colony){
-            if(inv.canAfford(selected.getCost())){ //If statement is not acting as intended. Planets wont colonize properly.
+            if(inv.canAfford(selected.getCost())){
                 selected.colony = true;
                 grid.distances(a, b);
                 inv.Spend(selected.getCost());

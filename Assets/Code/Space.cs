@@ -13,7 +13,7 @@ public class Planet{
     private int[] colCost, modifiers;
     public int[] production, upkeep;
     public bool colony, maxed, barren, super;
-    public List<string> buildings;//Unused.
+    public List<string> buildings; //Assigned but not really used.
 
     public Planet(){
         buildings = new List<string> {};
@@ -53,7 +53,7 @@ public class Planet{
                 modifiers[i] = 2;
             }
         }
-        modifiers[5] = mod[5]; //Currently a bit of a joke. Need to change how 'changeProd' handles this.
+        modifiers[5] = mod[5];
     }
 
     public void changeProd(int[] a){
