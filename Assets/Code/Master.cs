@@ -190,7 +190,17 @@ public class Master : MonoBehaviour
     }
 
     void transaction(string n){
-        inv.market(n);
+        if(Input.GetKey("right shift") || Input.GetKey("left shift")){
+            for(int i=0; i<5; i++){
+                inv.market(n);
+            }
+        } else if(Input.GetKey("right ctrl") || Input.GetKey("left ctrl")){
+            for(int i=0; i<10; i++){
+                inv.market(n);
+            }
+        } else {
+            inv.market(n);
+        }
         topText.text = inv.getInfo();
     }
 
@@ -329,6 +339,12 @@ public class Master : MonoBehaviour
                     modText.text = "" + modTemp[k];
                 }
             }
+            modText = temp2.transform.GetChild(5).gameObject.GetComponent<Text>();
+            if(modTemp[5] > -1){
+                modText.text = "$: +" + (10* modTemp[5]) + "%";
+            } else {
+                modText.text = "$: " + (10* modTemp[5]) + "%";
+            }
 
             temp2 = pcan.transform.GetChild(6).gameObject;
             modTemp = selected.planets[j].getProd();
@@ -336,6 +352,8 @@ public class Master : MonoBehaviour
                 modText = temp2.transform.GetChild(k).gameObject.GetComponent<Text>();
                 modText.text = "" + modTemp[k];
             }
+            modText = temp2.transform.GetChild(5).gameObject.GetComponent<Text>();
+            modText.text = "$: " + modTemp[5];
 
             temp2 = pcan.transform.GetChild(7).gameObject;
             modTemp = selected.planets[j].getUpke();
@@ -343,6 +361,8 @@ public class Master : MonoBehaviour
                 modText = temp2.transform.GetChild(k).gameObject.GetComponent<Text>();
                 modText.text = "" + modTemp[k];
             }
+            modText = temp2.transform.GetChild(5).gameObject.GetComponent<Text>();
+            modText.text = "$: " + modTemp[5];
 
             planets[j].transform.position = spot;
             //col.setDD(selected.planets[j], pdd);

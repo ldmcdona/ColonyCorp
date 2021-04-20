@@ -57,14 +57,17 @@ public class Planet{
     }
 
     public void changeProd(int[] a){
-        int temp;
-        for(int i=0; i<6; i++){
+        double temp;
+        for(int i=0; i<5; i++){
             temp = a[i] + modifiers[i];
             if(temp < 0){
                 temp = 0;
             }
-            production[i] += temp;
+            production[i] += (int)temp;
         }
+        temp = a[5] * (1 + 0.1 * modifiers[5]);
+        int b = (int) temp;
+        production[5] += b;
     }
 
     public string getInfo(){

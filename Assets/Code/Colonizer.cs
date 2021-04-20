@@ -4,15 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Building{
-    public int[] cost, production;
-    public int size;
+    public int[] cost, production, sp, upkeep;
+    public int size, points;
     public string name;
 }
 
+/*
 public class Special : Building{
     public int points;
     public int[] upkeep;
 }
+*/
 
 public class Colonizer : MonoBehaviour
 {
@@ -22,7 +24,8 @@ public class Colonizer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        buildings = new Building[8];    //Number is subject to change.
+        //buildings = new Building[8];    //Number is subject to change.
+        buildings = new Building[10]; //testing an idea
         defineBuildings();
         ddOptions = new List<string> {};
     }
@@ -69,14 +72,34 @@ public class Colonizer : MonoBehaviour
         buildings[6] = new Building();
         buildings[6].name = "Civilian Center";
         buildings[6].cost = new int[] {1, 1, 1, 1, 1, 250};
-        buildings[6].production = new int[] {0, 0, 0, 0, 0, 0};
         buildings[6].size = 4;
+        buildings[6].points = 3;
 
+        buildings[7] = new Building();
+        buildings[7].name = "Purple Refinery";
+        buildings[7].cost = new int[] {1, 1, 0, 0, 0, 600};
+        buildings[7].size = 2;
+        buildings[7].sp = new int[] {2, 0, 0};
+        buildings[7].upkeep = new int[] {1, 1, 0, 0, 0, 0};
+
+        buildings[8] = new Building();
+        buildings[8].name = "Lime Refinery";
+        buildings[8].cost = new int[] {0, 0, 1, 1, 0, 1000};
+        buildings[8].size = 4;
+        buildings[8].sp = new int[] {0, 2, 0};
+        buildings[8].upkeep = new int[] {0, 0, 1, 1, 0, 0};
+
+        buildings[9] = new Building();
+        buildings[9].name = "Black Refinery";
+        buildings[9].cost = new int[] {0, 0, 0, 0, 1, 1500};
+        buildings[9].size = 6;
+        buildings[9].sp = new int[] {0, 0, 1};
+        buildings[9].upkeep = new int[] {0, 0, 0, 0, 1, 100};
     }
 
     public void colonize(Resources inv, Planet selected, Text top, GameObject display, GridBehaviour grid, int a, int b, List<Planet> pLog){
         GameObject cbuObj, canv, buildObj;
-        Text buttonText, infoText, costText, modText; //modText isn't used yet because colony level doesn't affect upkeep yet.
+        Text buttonText, infoText, costText; //modText; //modText isn't used yet because colony level doesn't affect upkeep yet.
         Dropdown pdd;
         SpriteRenderer psr;
 
@@ -134,6 +157,10 @@ public class Colonizer : MonoBehaviour
         temp = display.transform.GetChild(0).gameObject;
         temp = temp.transform.GetChild(6).gameObject;
 
+        //if(buildings[pdd.value].sp != None || buildings[pdd.value].points != None)
+            //Special conditions for special buildings. Might be easier to do a boolean.
+        //else 
+
         if(inv.canAfford(buildings[pdd.value].cost) && buildings[pdd.value].size <= selected.size){
             selected.buildings.Add(buildings[pdd.value].name);
             inv.Spend(buildings[pdd.value].cost); //pdd.value is the index of the selection dd option. Meaning this needs to be changed.
@@ -147,6 +174,8 @@ public class Colonizer : MonoBehaviour
                 modText = temp.transform.GetChild(i).gameObject.GetComponent<Text>();
                 modText.text = "" + prod[i];
             }
+            modText = temp.transform.GetChild(5).gameObject.GetComponent<Text>();
+            modText.text = "$: " + prod[5];
         }
     }
 
