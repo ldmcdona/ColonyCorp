@@ -9,13 +9,6 @@ public class Building{
     public string name;
 }
 
-/*
-public class Special : Building{
-    public int points;
-    public int[] upkeep;
-}
-*/
-
 public class Colonizer : MonoBehaviour
 {
     public Building[] buildings;
@@ -98,8 +91,8 @@ public class Colonizer : MonoBehaviour
     }
 
     public void colonize(Resources inv, Planet selected, Text top, GameObject display, GridBehaviour grid, int a, int b, List<Planet> pLog){
-        GameObject cbuObj, canv, buildObj;
-        Text buttonText, infoText, costText; //modText; //modText isn't used yet because colony level doesn't affect upkeep yet.
+        GameObject cbuObj, canv, buildObj, spare;
+        Text buttonText, infoText, costText, modText; //modText isn't used yet because colony level doesn't affect upkeep yet.
         Dropdown pdd;
         SpriteRenderer psr;
 
@@ -109,9 +102,10 @@ public class Colonizer : MonoBehaviour
         infoText = canv.transform.GetChild(2).gameObject.GetComponent<Text>();
         costText = canv.transform.GetChild(3).gameObject.GetComponent<Text>();
         cbuObj = canv.transform.GetChild(4).gameObject;
-        //bbuObj = canv.transform.GetChild(4).gameObject;
-        //ddObj = canv.transform.GetChild(5).gameObject;
         buildObj = canv.transform.GetChild(0).gameObject;
+
+        spare = canv.transform.GetChild(7).gameObject;
+        modText = spare.transform.GetChild(5).gameObject.GetComponent<Text>(); //Eventually want this to be done for-loop style like in Master.
 
         buttonText = cbuObj.transform.GetChild(0).gameObject.GetComponent<Text>();
         pdd = buildObj.transform.GetChild(1).gameObject.GetComponent<Dropdown>();
@@ -137,6 +131,8 @@ public class Colonizer : MonoBehaviour
                 inv.Spend(selected.getCost());
                 selected.levelUp();
                 top.text = inv.getInfo();
+                int[] upkeep = selected.getUpke();
+                modText.text = "$: " + upkeep[5];
                 infoText.text = selected.getInfo();
                 Color tempC = new Color(0.3f, (0.1f * selected.level), 0.1f);
                 selected.pColor = tempC;

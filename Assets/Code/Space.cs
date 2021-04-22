@@ -171,45 +171,40 @@ public class Planet{
         rollModifiers(mod);
     }
 
-    public void levelUp(){          //This is gonna need to be rebuilt for the new system.
-        if(level < levelCap){
-            level += 1;
-            if(level != 1){
-                production[5] -= 40;
-                size += (level * 2);
-            } else {
-                for(int i=0; i<5; i++){
-                    colCost[i] = 0;
-                }
-                if(heat == "Cold Warning"){
-                    colCost[0] = 1;
-                } else if(heat == "Heat Warning"){
-                    colCost[1] = 1;
-                }
-                colCost[5] = 1000;
-            }
-
-            if(level == 2){
-                colCost[0] += 1;
-                colCost[1] += 1;
-                colCost[5] += 1000;
-            } else if(level == 3){
-                colCost[0] += 1;
-                colCost[1] += 1;
-                colCost[5] += 1500;
-            } else if(level == 4){
+    public void levelUp(){
+        for(int i=0; i<5; i++){
+            colCost[i] = 0;
+        }
+        
+        if(level == 0){
+            colCost[5] = 1000;
+            colony = true;
+            level = 1;
+        } else {
+            if(level == 1){
+                colCost[0] = 1;
+                colCost[1] = 1;
+                colCost[5] = 1500;
+            } else if(level == 2){
                 colCost[2] = 1;
                 colCost[3] = 1;
-                colCost[5] += 2000;
-            } else if(level == 5){
-                colCost[2] += 1;
-                colCost[3] += 1;
-                colCost[5] += 2500;
-            } else if(level == 6){
+                colCost[5] = 2000;
+            } else if(level == 3){
                 colCost[4] = 1;
-                colCost[5] += 3000;
+                colCost[5] = 2500;
+            } else if(level == 4){ //Here's where it get tricky. Do I want to start special costs here?
+                //colCost
+                colCost[5] = 3000;
+            } else if(level == 5){
+                colCost[5] = 3500;
+            } else if(level == 6){
+                colCost[5] = 4000;
             }
+            level += 1;
+            size += (level * 2);
+            upkeep[5] += ((level-1) * 50); //Need more of a production sink I think.
         }
+
         if(level == levelCap){
             maxed = true;
         }
