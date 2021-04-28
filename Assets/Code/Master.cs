@@ -332,13 +332,14 @@ public class Master : MonoBehaviour
                     modText.text = "" + modTemp[k];
                 }
             }
+
             modText = temp2.transform.GetChild(5).gameObject.GetComponent<Text>();
             if(modTemp[5] > -1){
                 modText.text = "$: +" + (10* modTemp[5]) + "%";
             } else {
                 modText.text = "$: " + (10* modTemp[5]) + "%";
             }
-
+            /*
             temp2 = pcan.transform.GetChild(6).gameObject;
             modTemp = selected.planets[j].getProd();
             for(int k=0; k<5; k++){
@@ -356,6 +357,7 @@ public class Master : MonoBehaviour
             }
             modText = temp2.transform.GetChild(5).gameObject.GetComponent<Text>();
             modText.text = "$: " + modTemp[5];
+            */
 
             planets[j].transform.position = spot;
             //col.setDD(selected.planets[j], pdd);

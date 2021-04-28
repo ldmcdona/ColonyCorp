@@ -92,7 +92,7 @@ public class Colonizer : MonoBehaviour
 
     public void colonize(Resources inv, Planet selected, Text top, GameObject display, GridBehaviour grid, int a, int b, List<Planet> pLog){
         GameObject cbuObj, canv, buildObj, spare;
-        Text buttonText, infoText, costText, modText; //modText isn't used yet because colony level doesn't affect upkeep yet.
+        Text buttonText, infoText, costText; //modText; //modText isn't used yet because colony level doesn't affect upkeep yet.
         Dropdown pdd;
         SpriteRenderer psr;
 
@@ -105,7 +105,7 @@ public class Colonizer : MonoBehaviour
         buildObj = canv.transform.GetChild(0).gameObject;
 
         spare = canv.transform.GetChild(7).gameObject;
-        modText = spare.transform.GetChild(5).gameObject.GetComponent<Text>(); //Eventually want this to be done for-loop style like in Master.
+        //modText = spare.transform.GetChild(5).gameObject.GetComponent<Text>(); //Eventually want this to be done for-loop style like in Master.
 
         buttonText = cbuObj.transform.GetChild(0).gameObject.GetComponent<Text>();
         pdd = buildObj.transform.GetChild(1).gameObject.GetComponent<Dropdown>();
@@ -132,7 +132,7 @@ public class Colonizer : MonoBehaviour
                 selected.levelUp();
                 top.text = inv.getInfo();
                 int[] upkeep = selected.getUpke();
-                modText.text = "$: " + upkeep[5];
+                //modText.text = "$: " + upkeep[5];
                 infoText.text = selected.getInfo();
                 Color tempC = new Color(0.3f, (0.1f * selected.level), 0.1f);
                 selected.pColor = tempC;
@@ -148,7 +148,7 @@ public class Colonizer : MonoBehaviour
     }
 
     public void build(Resources inv, Planet selected, Dropdown pdd, Text top, Text infoText, GameObject display){
-        Text modText;
+        //Text modText;
         GameObject temp;
         temp = display.transform.GetChild(0).gameObject;
         temp = temp.transform.GetChild(6).gameObject;
@@ -165,6 +165,7 @@ public class Colonizer : MonoBehaviour
             selected.size -= buildings[pdd.value].size;
             infoText.text = selected.getInfo();
             //setDD(selected, pdd);
+            /*
             int[] prod = selected.getProd();
             for(int i=0; i<5; i++){
                 modText = temp.transform.GetChild(i).gameObject.GetComponent<Text>();
@@ -172,6 +173,7 @@ public class Colonizer : MonoBehaviour
             }
             modText = temp.transform.GetChild(5).gameObject.GetComponent<Text>();
             modText.text = "$: " + prod[5];
+            */
         }
     }
 
