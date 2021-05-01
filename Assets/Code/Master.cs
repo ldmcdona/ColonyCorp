@@ -277,16 +277,26 @@ public class Master : MonoBehaviour
                 spot.y = 17f;
             }
             planets[j] = Instantiate<GameObject>(planetPrefab);
+            
+            Display bob = planets[j].transform.GetChild(0).gameObject.GetComponent<Display>();
+            if(selected.planets[j].colony){
+                bob.genesis(selected.planets[j].getProd(), 1);
+                bob.genesis(selected.planets[j].getUpke(), 2);
+            }
+            if(!selected.planets[j].maxed){
+                bob.genesis(selected.planets[j].getCost(), 3);
+            }
+
             GameObject pcan, temp2, buildObj;
-            Text coordText, infoText, costText, pbtx, modText;
+            Text coordText, infoText, pbtx, modText;
             Button pbu1, pbu2;
             SpriteRenderer pim;
             Dropdown pdd;
             pcan = planets[i].transform.GetChild(0).gameObject;//Canvas
             coordText = pcan.transform.GetChild(1).gameObject.GetComponent<Text>(); //coords
             infoText = pcan.transform.GetChild(2).gameObject.GetComponent<Text>(); //info
-            costText = pcan.transform.GetChild(3).gameObject.GetComponent<Text>(); //cost
-            temp2 = pcan.transform.GetChild(4).gameObject;
+            //costText = pcan.transform.GetChild(3).gameObject.GetComponent<Text>(); //cost
+            temp2 = pcan.transform.GetChild(3).gameObject;
             pbu1 = temp2.GetComponent<Button>(); //Colonize/Upgrade
             pbtx = temp2.transform.GetChild(0).gameObject.GetComponent<Text>();
             pim = planets[i].transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
@@ -294,35 +304,35 @@ public class Master : MonoBehaviour
             pdd = buildObj.transform.GetChild(1).gameObject.GetComponent<Dropdown>();
             pbu2 = buildObj.transform.GetChild(0).gameObject.GetComponent<Button>(); //Build
 
-            pbu1.onClick.AddListener(delegate {col.colonize(inv, selected.planets[j], topText, planets[j], grid, selected.x, selected.y, pLog); });
-            pbu2.onClick.AddListener(delegate {col.build(inv, selected.planets[j], pdd, topText, infoText, planets[j]); });
+            pbu1.onClick.AddListener(delegate {col.colonize(inv, selected.planets[j], topText, planets[j], grid, selected.x, selected.y, pLog, bob); });
+            pbu2.onClick.AddListener(delegate {col.build(inv, selected.planets[j], pdd, topText, infoText, planets[j], bob); });
 
             pdd.onValueChanged.AddListener(delegate {col.ddDisplay(pdd, buildObj); });
 
             coordText.text = "Planet (" + selected.x + ", " + selected.y + ") - " + (i+1);
             infoText.text = selected.planets[j].getInfo();
-            costText.text = selected.planets[j].getCostDisplay();
+            //costText.text = selected.planets[j].getCostDisplay();
             pim.color = selected.planets[j].pColor;
 
             if(!selected.planets[j].colony){
                 buildObj.SetActive(false);           
             } else {
-                if(selected.planets[j].level != selected.planets[j].levelCap){
+                if(!selected.planets[j].maxed){
                     pbtx.text = "Upgrade";
                 } else {
-                    temp2 = pcan.transform.GetChild(4).gameObject;
+                    temp2 = pcan.transform.GetChild(3).gameObject;
                     temp2.SetActive(false);
-                    costText.text = "Colony Level Maxed";
+                    //costText.text = "Colony Level Maxed";
                 }
             }
 
             if(selected.exploration < 3){
                 buildObj.SetActive(false);
-                temp2 = pcan.transform.GetChild(4).gameObject;
+                temp2 = pcan.transform.GetChild(3).gameObject;
                 temp2.SetActive(false);
             }
 
-            temp2 = pcan.transform.GetChild(5).gameObject;
+            temp2 = pcan.transform.GetChild(4).gameObject;
             int[] modTemp = selected.planets[j].getMod();
             for(int k=0; k<5; k++){
                 modText = temp2.transform.GetChild(k).gameObject.GetComponent<Text>();

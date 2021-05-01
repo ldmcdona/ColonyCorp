@@ -90,9 +90,9 @@ public class Colonizer : MonoBehaviour
         buildings[9].upkeep = new int[] {0, 0, 0, 0, 1, 100};
     }
 
-    public void colonize(Resources inv, Planet selected, Text top, GameObject display, GridBehaviour grid, int a, int b, List<Planet> pLog){
-        GameObject cbuObj, canv, buildObj, spare;
-        Text buttonText, infoText, costText; //modText; //modText isn't used yet because colony level doesn't affect upkeep yet.
+    public void colonize(Resources inv, Planet selected, Text top, GameObject display, GridBehaviour grid, int a, int b, List<Planet> pLog, Display bob){
+        GameObject cbuObj, canv, buildObj; //spare;
+        Text buttonText, infoText; //costText, modText; //modText isn't used yet because colony level doesn't affect upkeep yet.
         Dropdown pdd;
         SpriteRenderer psr;
 
@@ -100,11 +100,11 @@ public class Colonizer : MonoBehaviour
         psr = display.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
 
         infoText = canv.transform.GetChild(2).gameObject.GetComponent<Text>();
-        costText = canv.transform.GetChild(3).gameObject.GetComponent<Text>();
-        cbuObj = canv.transform.GetChild(4).gameObject;
+        //costText = canv.transform.GetChild(3).gameObject.GetComponent<Text>();
+        cbuObj = canv.transform.GetChild(3).gameObject;
         buildObj = canv.transform.GetChild(0).gameObject;
 
-        spare = canv.transform.GetChild(7).gameObject;
+        //spare = canv.transform.GetChild(7).gameObject;
         //modText = spare.transform.GetChild(5).gameObject.GetComponent<Text>(); //Eventually want this to be done for-loop style like in Master.
 
         buttonText = cbuObj.transform.GetChild(0).gameObject.GetComponent<Text>();
@@ -123,8 +123,13 @@ public class Colonizer : MonoBehaviour
                 psr.color = tempC;
                 buttonText.text = "Upgrade";
                 buildObj.SetActive(true); //here
-                costText.text = selected.getCostDisplay();
+                //costText.text = selected.getCostDisplay();
                 pLog.Add(selected);
+                bob.neoGenesis(selected.getProd(), 1);
+                bob.genesis(selected.getUpke(), 2);
+                if(!selected.maxed){
+                    bob.genesis(selected.getCost(), 3);
+                }
             }
         } else {
             if(inv.canAfford(selected.getCost())){
@@ -138,20 +143,25 @@ public class Colonizer : MonoBehaviour
                 selected.pColor = tempC;
                 psr.color = tempC;
                 //setDD(selected, pdd);
-                costText.text = selected.getCostDisplay();
+                //costText.text = selected.getCostDisplay();
                 if(selected.maxed){
                     cbuObj.SetActive(false);
-                    costText.text = "Colony Level Maxed";
+                    //costText.text = "Colony Level Maxed";
+                }
+                bob.neoGenesis(selected.getProd(), 1);
+                bob.genesis(selected.getUpke(), 2);
+                if(!selected.maxed){
+                    bob.genesis(selected.getCost(), 3);
                 }
             }
         }
     }
 
-    public void build(Resources inv, Planet selected, Dropdown pdd, Text top, Text infoText, GameObject display){
+    public void build(Resources inv, Planet selected, Dropdown pdd, Text top, Text infoText, GameObject display, Display bob){
         //Text modText;
         GameObject temp;
         temp = display.transform.GetChild(0).gameObject;
-        temp = temp.transform.GetChild(6).gameObject;
+        //temp = temp.transform.GetChild(6).gameObject;
 
         //if(buildings[pdd.value].sp != None || buildings[pdd.value].points != None)
             //Special conditions for special buildings. Might be easier to do a boolean.
@@ -164,6 +174,11 @@ public class Colonizer : MonoBehaviour
             top.text = inv.getInfo();
             selected.size -= buildings[pdd.value].size;
             infoText.text = selected.getInfo();
+            bob.neoGenesis(selected.getProd(), 1);
+            bob.genesis(selected.getUpke(), 2);
+            if(!selected.maxed){
+                bob.genesis(selected.getCost(), 3);
+            }
             //setDD(selected, pdd);
             /*
             int[] prod = selected.getProd();

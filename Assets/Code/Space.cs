@@ -71,9 +71,10 @@ public class Planet{
     }
 
     public string getInfo(){
-        return (type + "\n" + heat + "\nSize: " + size + "\nModifiers:\nProduction:\nUpkeep:");
+        return (type + "\n" + heat + "\nSize: " + size + "\nModifiers:\nProduction:\nUpkeep:\nCost:");
     }
 
+/*
     public string getCostDisplay(){
         string a = "Cost: " + colCost[5];
         if(colCost[0] != 0){
@@ -93,6 +94,7 @@ public class Planet{
         }
         return a;
     }
+*/
 
     public void setType(string a, string b){
         int[] col;
@@ -320,6 +322,7 @@ public class Space : MonoBehaviour
         }
     }
 
+/*
     public string getPlanetInfo(int a){
         return planets[a].getInfo();
     }
@@ -332,4 +335,5 @@ public class Space : MonoBehaviour
         //return planets[a].getColor();
         return planets[a].pColor;
     }
+*/
 }

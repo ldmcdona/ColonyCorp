@@ -50,7 +50,7 @@ public class GridBehaviour : MonoBehaviour
         cell.transform.localPosition = position;
         
         Random.InitState((int)System.DateTime.Now.Ticks);
-        int roll = Random.Range(0, 5);
+        int roll = Random.Range(1, 5);
         cell.planetCount = roll;
         cell.pSetup(roll);
         cell.distance = 100;
