@@ -93,7 +93,7 @@ public class Master : MonoBehaviour
         temp = transform.GetChild(7).gameObject;//Market
         temp = temp.transform.GetChild(1).gameObject;//Canvas
         temp = temp.transform.GetChild(1).gameObject;//Sell        
-        for(int i = 0; i<5; i++){
+        for(int i = 0; i<8; i++){
             GameObject temp2;
             temp2 = temp.transform.GetChild(i).gameObject;
             btemp = temp2.GetComponent<Button>();
@@ -307,7 +307,7 @@ public class Master : MonoBehaviour
             pbu1.onClick.AddListener(delegate {col.colonize(inv, selected.planets[j], topText, planets[j], grid, selected.x, selected.y, pLog, bob); });
             pbu2.onClick.AddListener(delegate {col.build(inv, selected.planets[j], pdd, topText, infoText, planets[j], bob); });
 
-            pdd.onValueChanged.AddListener(delegate {col.ddDisplay(pdd, buildObj); });
+            pdd.onValueChanged.AddListener(delegate {col.ddDisplay(pdd, buildObj, bob); });
 
             coordText.text = "Planet (" + selected.x + ", " + selected.y + ") - " + (i+1);
             infoText.text = selected.planets[j].getInfo();
@@ -317,6 +317,9 @@ public class Master : MonoBehaviour
             if(!selected.planets[j].colony){
                 buildObj.SetActive(false);           
             } else {
+                int[] toll;
+                toll = new int[] {0,0,0,0,0,0,0,0,100};
+                bob.buildingGenesis(toll);
                 if(!selected.planets[j].maxed){
                     pbtx.text = "Upgrade";
                 } else {
@@ -389,14 +392,14 @@ public class Master : MonoBehaviour
     }
 
     void endTurn(){
-        int[] x = {0, 0, 0, 0, 0, 100};
-        int[] y = {0, 0, 0, 0, 0, 0};
-        int[] z = {0, 0, 0, 0, 0, 0};
+        int[] x = {0, 0, 0, 0, 0, 0, 0, 0, 100};
+        int[] y = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+        int[] z = {0, 0, 0, 0, 0, 0, 0, 0, 0};
         turn++;
         turnText.text = "Turn: " + turn;
 
         foreach(Planet p in pLog){
-            for(int i=0; i<6; i++){
+            for(int i=0; i<9; i++){
                 x[i] += p.production[i];
                 y[i] += p.upkeep[i];
                 z[i] = x[i] - y[i];
@@ -405,7 +408,7 @@ public class Master : MonoBehaviour
 
         inv.Gain(x);
         inv.Spend(y);
-        upkeepText.text = "Cash: " + z[5] + " Red: " + z[0] + " Blue: " + z[1] + " Green: " + z[2] + " Yellow: " + z[3] + " White: " + z[4];
+        upkeepText.text = "Cash: "+z[8]+" Red: "+z[0]+" Blue: "+z[1]+" Green: "+z[2]+" Yellow: "+z[3]+" White: "+z[4]+" Purple: "+z[5]+" Lime: "+z[6]+" Black: "+z[7];
 
         if(inv.cash < 0){
             //Debug.Log("Sell All Triggered.");

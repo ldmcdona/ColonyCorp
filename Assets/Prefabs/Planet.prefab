@@ -119,6 +119,7 @@ MonoBehaviour:
   bobPrefab: {fileID: 3835001524741900811, guid: c80e8c19794ed7345a0ce5264aacbbd1,
     type: 3}
   control: []
+  Qcontrol: []
 --- !u!1 &188955836103763394
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +550,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Cost: 100'
+  m_Text: 'Cost: '
 --- !u!1 &1302734522047056387
 GameObject:
   m_ObjectHideFlags: 0

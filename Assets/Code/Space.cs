@@ -17,9 +17,9 @@ public class Planet{
 
     public Planet(){
         buildings = new List<string> {};
-        colCost = new int[] {0, 0, 0, 0, 0, 0};
+        colCost = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
         modifiers = new int[] {0, 0, 0, 0, 0, 0};
-        production = new int[] {0, 0, 0, 0, 0, 0};
+        production = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
         pColor = new Color(0.1f, 0.1f, 0.3f);
         colony = maxed = false;
         level = levelCap = 0;
@@ -58,16 +58,19 @@ public class Planet{
 
     public void changeProd(int[] a){
         double temp;
-        for(int i=0; i<5; i++){
-            temp = a[i] + modifiers[i];
+        for(int i=0; i<8; i++){
+            temp = a[i];
+            if(i < 5){
+                temp = a[i] + modifiers[i];
+            }
             if(temp < 0){
                 temp = 0;
             }
             production[i] += (int)temp;
         }
-        temp = a[5] * (1 + 0.1 * modifiers[5]);
+        temp = a[8] * (1 + 0.1 * modifiers[5]);
         int b = (int) temp;
-        production[5] += b;
+        production[8] += b;
     }
 
     public string getInfo(){
@@ -103,57 +106,57 @@ public class Planet{
         type = a;
         heat = b;
         if(a == "Asteroid Belt"){
-            col = new int[] {0, 0, 0, 0, 0, 1000};                //Blurg, okay, lets think. R&B is rocks? G&Y is Gases? W is organics?
+            col = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 1000};                //Blurg, okay, lets think. R&B is rocks? G&Y is Gases? W is organics?
             mod = new int[] {0, 0, -2, -2, -10, 0};
-            upk = new int[] {0, 0, 0, 0, 0, 50};
+            upk = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 50};
             size = 2;
             levelCap = 2;
         } else if(a == "Barren Moon"){
-            col = new int[] {1, 1, 0, 0, 0, 1000};
+            col = new int[] {1, 1, 0, 0, 0, 0, 0, 0, 1000};
             mod = new int[] {1, 1, -1, -1, -10, 0};
-            upk = new int[] {1, 1, 0, 0, 0, 75};
+            upk = new int[] {1, 1, 0, 0, 0, 0, 0, 0, 75};
             size = 6;
             levelCap = 2;
         } else if(a == "Featured Moon"){
-            col = new int[] {2, 2, 0, 0, 0, 1250};
+            col = new int[] {2, 2, 0, 0, 0, 0, 0, 0, 1250};
             mod = new int[] {1, 1, 0, 0, -10, 0};
-            upk = new int[] {1, 1, 0, 0, 0, 100};
+            upk = new int[] {1, 1, 0, 0, 0, 0, 0, 0, 100};
             size = 6;
             levelCap = 3;
         } else if(a == "Dangerous Planet"){
-            col = new int[] {1, 1, 1, 1, 0, 2000};
+            col = new int[] {1, 1, 1, 1, 0, 0, 0, 0, 2000};
             mod = new int[] {3, 3, 1, 1, -3, -1};
-            upk = new int[] {2, 2, 0, 0, 1, 300};
+            upk = new int[] {2, 2, 0, 0, 1, 0, 0, 0, 300};
             size = 10;
             levelCap = 2;
         } else if(a == "Barren Planet"){
-            col = new int[] {2, 2, 0, 0, 0, 1500};
+            col = new int[] {2, 2, 0, 0, 0, 0, 0, 0, 1500};
             mod = new int[] {1, 1, 0, 0, -2, 0};
-            upk = new int[] {1, 1, 1, 1, 1, 200};
+            upk = new int[] {1, 1, 1, 1, 1, 0, 0, 0, 200};
             size = 12;
             levelCap = 3;
         } else if(a == "Featured Planet"){
-            col = new int[] {2, 2, 0, 0, 0, 1750};
+            col = new int[] {2, 2, 0, 0, 0, 0, 0, 0, 1750};
             mod = new int[] {1, 1, 1, 1, -1, 0};
-            upk = new int[] {1, 1, 1, 1, 1, 250};
+            upk = new int[] {1, 1, 1, 1, 1, 0, 0, 0, 250};
             size = 12;
             levelCap = 4;
         } else if(a == "Fertile Planet"){
-            col = new int[] {2, 2, 1, 1, 0, 2000};
+            col = new int[] {2, 2, 1, 1, 0, 0, 0, 0, 2000};
             mod = new int[] {1, 1, 1, 1, 0, 1};
-            upk = new int[] {2, 2, 1, 1, 1, 300};
+            upk = new int[] {2, 2, 1, 1, 1, 0, 0, 0, 300};
             size = 14;
             levelCap = 5;
         } else if(a == "Terran Planet"){
-            col = new int[] {2, 2, 2, 2, 0, 2500};
+            col = new int[] {2, 2, 2, 2, 0, 0, 0, 0, 2500};
             mod = new int[] {1, 1, 1, 1, 1, 2};
-            upk = new int[] {2, 2, 2, 2, 1, 350};
+            upk = new int[] {2, 2, 2, 2, 1, 0, 0, 0, 350};
             size = 16;
             levelCap = 6;
         } else {
-            col = new int[] {0, 0, 0, 0, 0, 0};
+            col = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
             mod = new int[] {-10, -10, -10, -10, -10, -10};
-            upk = new int[] {0, 0, 0, 0, 0, 0};
+            upk = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
             Debug.Log("Planet Generation Error");
         }
 
@@ -174,37 +177,39 @@ public class Planet{
     }
 
     public void levelUp(){
-        for(int i=0; i<5; i++){
+        for(int i=0; i<9; i++){
             colCost[i] = 0;
         }
         
         if(level == 0){
-            colCost[5] = 1000;
+            colCost[8] = 1000;
             colony = true;
             level = 1;
         } else {
             if(level == 1){
                 colCost[0] = 1;
                 colCost[1] = 1;
-                colCost[5] = 1500;
+                colCost[8] = 1500;
             } else if(level == 2){
                 colCost[2] = 1;
                 colCost[3] = 1;
-                colCost[5] = 2000;
+                colCost[8] = 2000;
             } else if(level == 3){
                 colCost[4] = 1;
-                colCost[5] = 2500;
+                colCost[8] = 2500;
             } else if(level == 4){ //Here's where it get tricky. Do I want to start special costs here?
-                //colCost
-                colCost[5] = 3000;
+                colCost[5] = 1;
+                colCost[8] = 3000;
             } else if(level == 5){
-                colCost[5] = 3500;
-            } else if(level == 6){
-                colCost[5] = 4000;
+                colCost[6] = 1;
+                colCost[8] = 3500;
+            } else if(level == 6){ //This is actually impossible to achive in the current system. Max level-cap is 6, having level-up cost beyond is impossible.
+                colCost[7] = 1;
+                colCost[8] = 4000;
             }
             level += 1;
             size += (level * 2);
-            upkeep[5] += ((level-1) * 50); //Need more of a production sink I think.
+            upkeep[8] += ((level-1) * 50); //Need more of a production sink I think.
         }
 
         if(level == levelCap){
@@ -230,11 +235,11 @@ public class Space : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
-        cost = new int[] {0,0,0,0,0,0};
+        cost = new int[] {0,0,0,0,0,0,0,0,0}; //Probably change to int instead of int[], but we'll see.
 
         exploration = 0;
         myself = GetComponent<Image>();
-        cost[5] = (100 * (exploration+1) * distance);
+        cost[8] = (100 * (exploration+1) * distance);
     }
 
     public void coord(int a, int b){
@@ -245,9 +250,8 @@ public class Space : MonoBehaviour
     public void explore(){
         if(exploration < 3){
             exploration++;
-            cost[5] = (100 * (exploration+1) * distance);
+            cost[8] = (100 * (exploration+1) * distance);
             float r = 1, g = 0, b = 0;
-            //g = b = 0.3f * exploration;
             if(exploration == 1){
                 g = b = 0.5f;
             } else if(exploration == 2){
@@ -270,7 +274,7 @@ public class Space : MonoBehaviour
             desc += "\nPlanets: " + planetCount;
         }
         if(exploration != 3){
-            desc += ("\nScan Cost: $" + cost[5]);
+            desc += ("\nScan Cost: $" + cost[8]);
         } else {
             desc += ("\nFully Scanned.");
         }

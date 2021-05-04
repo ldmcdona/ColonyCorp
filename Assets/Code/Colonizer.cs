@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Building{
-    public int[] cost, production, sp, upkeep;
+    public int[] cost, production, upkeep;
     public int size, points;
     public string name;
+    public bool special = false;
 }
 
 public class Colonizer : MonoBehaviour
@@ -17,8 +18,7 @@ public class Colonizer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //buildings = new Building[8];    //Number is subject to change.
-        buildings = new Building[10]; //testing an idea
+        buildings = new Building[11]; //number is subject to change
         defineBuildings();
         ddOptions = new List<string> {};
     }
@@ -26,68 +26,79 @@ public class Colonizer : MonoBehaviour
     void defineBuildings(){             //This entire section is subject to rebuild.
         buildings[0] = new Building();
         buildings[0].name = "Toll Station";
-        buildings[0].cost = new int[] {0, 0, 0, 0, 0, 100};
-        buildings[0].production = new int[] {-2, -2, -2, -2, -2, 250};
+        buildings[0].cost = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 100};
+        buildings[0].production = new int[] {-2, -2, -2, -2, -2, 0, 0, 0, 250};
         buildings[0].size = 1;
 
         buildings[1] = new Building();
         buildings[1].name = "Red Mine";
-        buildings[1].cost = new int[] {0, 0, 0, 0, 0, 300};
-        buildings[1].production = new int[] {2, -2, -2, -2, -2, 0};
+        buildings[1].cost = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 300};
+        buildings[1].production = new int[] {2, -2, -2, -2, -2, 0, 0, 0, 0,};
         buildings[1].size = 2;
 
         buildings[2] = new Building();
         buildings[2].name = "Blue Mine";
-        buildings[2].cost = new int[] {0, 0, 0, 0, 0, 300};
-        buildings[2].production = new int[] {-2, 2, -2, -2, -2, 0};
+        buildings[2].cost = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 300};
+        buildings[2].production = new int[] {-2, 2, -2, -2, -2, 0, 0, 0, 0};
         buildings[2].size = 2;
 
         buildings[3] = new Building();
         buildings[3].name = "Green Pump";
-        buildings[3].cost = new int[] {1, 1, 0, 0, 0, 500};
-        buildings[3].production = new int[] {-2, -2, 2, -2, -2, 0};
+        buildings[3].cost = new int[] {1, 1, 0, 0, 0, 0, 0, 0, 500};
+        buildings[3].production = new int[] {-2, -2, 2, -2, -2, 0, 0, 0, 0};
         buildings[3].size = 4;
 
         buildings[4] = new Building();
         buildings[4].name = "Yellow Pump";
-        buildings[4].cost = new int[] {1, 1, 0, 0, 0, 500};
-        buildings[4].production = new int[] {-2, -2, -2, 2, -2, 0};
+        buildings[4].cost = new int[] {1, 1, 0, 0, 0, 0, 0, 0, 500};
+        buildings[4].production = new int[] {-2, -2, -2, 2, -2, 0, 0, 0, 0};
         buildings[4].size = 4;
 
         buildings[5] = new Building();
         buildings[5].name = "White Farm";
-        buildings[5].cost = new int[] {2, 2, 1, 1, 0, 750};
-        buildings[5].production = new int[] {-2, -2, -2, -2, 2, 0};
+        buildings[5].cost = new int[] {2, 2, 1, 1, 0, 0, 0, 0, 750};
+        buildings[5].production = new int[] {-2, -2, -2, -2, 2, 0, 0, 0, 0};
         buildings[5].size = 6;
 
         // --- IDEAS AND TESTING ---
 
         buildings[6] = new Building();
         buildings[6].name = "Civilian Center";
-        buildings[6].cost = new int[] {1, 1, 1, 1, 1, 250};
+        buildings[6].cost = new int[] {1, 1, 1, 1, 1, 0, 0, 0, 250};
         buildings[6].size = 4;
         buildings[6].points = 3;
+        buildings[6].special = true;
 
         buildings[7] = new Building();
-        buildings[7].name = "Purple Refinery";
-        buildings[7].cost = new int[] {1, 1, 0, 0, 0, 600};
-        buildings[7].size = 2;
-        buildings[7].sp = new int[] {2, 0, 0};
-        buildings[7].upkeep = new int[] {1, 1, 0, 0, 0, 0};
+        buildings[7].name = "Metropolis";
+        buildings[7].cost = new int[] {2, 2, 2, 2, 2, 1, 1, 1, 500};
+        buildings[7].size = 8;
+        buildings[7].points = 9;
+        buildings[7].special = true;
 
         buildings[8] = new Building();
-        buildings[8].name = "Lime Refinery";
-        buildings[8].cost = new int[] {0, 0, 1, 1, 0, 1000};
-        buildings[8].size = 4;
-        buildings[8].sp = new int[] {0, 2, 0};
-        buildings[8].upkeep = new int[] {0, 0, 1, 1, 0, 0};
+        buildings[8].name = "Purple Refinery";
+        buildings[8].cost = new int[] {1, 1, 0, 0, 0, 0, 0, 0, 600};
+        buildings[8].size = 2;
+        buildings[8].production = new int[] {0, 0, 0, 0, 0, 2, 0, 0, 0};
+        buildings[8].upkeep = new int[] {1, 1, 0, 0, 0, 0, 0, 0, 0};
+        buildings[8].special = true;
 
         buildings[9] = new Building();
-        buildings[9].name = "Black Refinery";
-        buildings[9].cost = new int[] {0, 0, 0, 0, 1, 1500};
-        buildings[9].size = 6;
-        buildings[9].sp = new int[] {0, 0, 1};
-        buildings[9].upkeep = new int[] {0, 0, 0, 0, 1, 100};
+        buildings[9].name = "Lime Refinery";
+        buildings[9].cost = new int[] {0, 0, 1, 1, 0, 0, 0, 0, 1000};
+        buildings[9].size = 4;
+        buildings[9].production = new int[] {0, 0, 0, 0, 0, 0, 2, 0, 0};
+        buildings[9].upkeep = new int[] {0, 0, 1, 1, 0, 0, 0, 0, 0};
+        buildings[9].special = true;
+
+        buildings[10] = new Building();
+        buildings[10].name = "Black Refinery";
+        buildings[10].cost = new int[] {0, 0, 0, 0, 1, 0, 0, 0, 1500};
+        buildings[10].size = 6;
+        buildings[10].production = new int[] {0, 0, 0, 0, 0, 0, 0, 1, 0};
+        buildings[10].upkeep = new int[] {0, 0, 0, 0, 1, 0, 0, 0, 100};
+        buildings[10].special = true;
     }
 
     public void colonize(Resources inv, Planet selected, Text top, GameObject display, GridBehaviour grid, int a, int b, List<Planet> pLog, Display bob){
@@ -130,6 +141,9 @@ public class Colonizer : MonoBehaviour
                 if(!selected.maxed){
                     bob.genesis(selected.getCost(), 3);
                 }
+                int[] toll;
+                toll = new int[] {0,0,0,0,0,0,0,0,100};
+                bob.buildingGenesis(toll);
             }
         } else {
             if(inv.canAfford(selected.getCost())){
@@ -163,7 +177,7 @@ public class Colonizer : MonoBehaviour
         temp = display.transform.GetChild(0).gameObject;
         //temp = temp.transform.GetChild(6).gameObject;
 
-        //if(buildings[pdd.value].sp != None || buildings[pdd.value].points != None)
+        //if(buildings[pdd.value].special)
             //Special conditions for special buildings. Might be easier to do a boolean.
         //else 
 
@@ -202,14 +216,17 @@ public class Colonizer : MonoBehaviour
 
     }
 
-    public void ddDisplay(Dropdown pdd, GameObject buildObj){
-        Text sizeText, costText;
+    public void ddDisplay(Dropdown pdd, GameObject buildObj, Display bob){
+        Text sizeText; //costText;
         sizeText = buildObj.transform.GetChild(2).gameObject.GetComponent<Text>();
-        costText = buildObj.transform.GetChild(3).gameObject.GetComponent<Text>();
+        //costText = buildObj.transform.GetChild(3).gameObject.GetComponent<Text>();
 
         sizeText.text = "Size: " + buildings[pdd.value].size;
 
-        string a = "Cost: " + buildings[pdd.value].cost[5];
+        bob.buildingGenesis(buildings[pdd.value].cost);
+
+        /*
+        string a = "Cost: " + buildings[pdd.value].cost[8];
         if(buildings[pdd.value].cost[0] != 0){
             a += " R" + buildings[pdd.value].cost[0];
         }
@@ -226,6 +243,7 @@ public class Colonizer : MonoBehaviour
             a += " W" + buildings[pdd.value].cost[4];
         }
         costText.text = a;
+        */
     }
 
     //https://docs.unity3d.com/2018.4/Documentation/ScriptReference/UI.Dropdown.html
